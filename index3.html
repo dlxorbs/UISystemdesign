@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+      <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <style>
+    
+    * {margin: 0;padding: 0;}
+    li {list-style: none}
+    .buttons {
+      position: absolute;
+      z-index: 99;
+      right: 0px;
+      display: flex;
+    }
+    .button{
+        width: 110px;
+        height: 80px;
+        background-color: #FFFFFF;
+        border: 1px solid #777777;
+        color: #929292;
+        text-align: center;
+        line-height: 80px;
+        font-size: 24px;
+
+    }
+    .button:hover{
+        background-color: #1A294F;
+        color: white;
+    }
+    .cloth{
+      position: absolute;
+      z-index: 99;
+      display: flex;
+      left: 0px;
+      bottom: 0px;
+    }
+    .배경드롭다운{
+        display: none;
+    }
+    .배경드롭다운 li{
+        background-color: #FFFFFF;
+        width: 100px;
+        font-size: 16px;
+    }
+    a-scene{
+      z-index: 0;
+    }
+    
+  </style>
+  <body>
+    <div class="buttons">
+        <div class="button">배경
+            <ul class="배경드롭다운">
+                <li><a href="#" class="실내배경">실내 배경</a></li>
+                <li><a href="#" class="전시회배경">전시회 배경</a></li>
+                <li><a href="#" class="야외배경">야외 배경</a></li>
+                <li><a href="#" class="저녁배경">저녁 배경</a></li>
+              </ul>
+            </ul>
+        </div>
+        <div class="button">포즈</div>
+    </div>
+    <div class="cloth">
+        <div class="button 검은티">검은티</div>
+        <div class="button 청바지">청바지</div>
+        <div class="button 아디다스팬츠">아디다스팬츠</div>
+        <div class="button 맨투맨">맨투맨</div>
+    </div>
+    <a-ssets>
+      <a-asset-item id="검은티"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EA%B2%80%EC%9D%80%ED%8B%B0.glb?v=1684759828708">
+      </a-asset-item>
+      <a-asset-item id="청바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%B2%AD%EB%B0%94%EC%A7%80.glb?v=1684760684296">
+      </a-asset-item>
+      <a-asset-item id="아디다스팬츠"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%8C%AC%EC%B8%A0.glb?v=1684770819587">
+      </a-asset-item>
+      <a-asset-item id="맨투맨"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EB%A7%A8%ED%88%AC%EB%A7%A8.glb?v=1684770945625">
+      </a-asset-item>
+      <a-asset-item id="벽돌바닥"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/old_stone_tile_with_displacement.glb?v=1684763163127">
+      </a-asset-item>
+    </a-ssets>
+  <a-scene shadow="autoUpdate: true; type: pcfsoft" renderer="gammaOutput: true">
+    <a-entity camera look-controls orbit-controls="target: 0 1.6 -0.5; minDistance: 0.5; maxDistance: 180; initialPosition: 0 5 15"></a-entity>
+    <a-entity class="상의">
+        <a-entity gltf-model="#검은티" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>
+    </a-entity>
+    <a-entity class="하의">
+        <a-entity gltf-model="#청바지" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>
+    </a-entity>
+      <!--바닥면 -->
+    <a-entity gltf-model="#벽돌바닥" normal-map="#normal" scale="20 20 20" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>
+
+      <!-- 환경 -->
+      <a-sky class="sky" rotation="0 64 0" src="https://cdn.glitch.me/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%8B%A4%EB%82%B4-%EB%B0%B0%EA%B2%BD-_1_.png?v=1684669108713"></a-sky>
+      <a-light class="포인트라이트" type="point" color="#fefed7" position="-12.498 17.339 7.324" intensity = "2"></a-light>
+      <a-light class="환경라이트" type="ambient" color="#403a12"></a-light>
+  </a-scene>
+
+<script>
+    $(".button").hover(function() {
+        $(this).children("ul").stop().slideToggle(500)
+    })
+
+    // 배경변경
+    $(".실내배경").click(function() {
+        $(".sky").attr("src", "https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/brown_photostudio_02_4k-_1_.png?v=1684764403602");
+        $(".포인트라이트").attr("color", "#ffffff");
+        $(".포인트라이트").attr("position", "-2.037 17.339 2.621");
+        $(".포인트라이트").attr("intensity", "2");
+        $(".환경라이트").attr("color", "#c2c2c2");
+        console.log('실내배경 전환')
+    })
+    $(".전시회배경").click(function() {
+        $(".sky").attr("src", "https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/modern_buildings_2_4k.png?v=1684764655674");
+        $(".포인트라이트").attr("color", "#ffffff");
+        $(".포인트라이트").attr("position", "-0 17.339 0");
+        $(".포인트라이트").attr("intensity", "2.4");
+        $(".환경라이트").attr("color", "#c2c2c2");
+        console.log('asd')
+    })
+    $(".야외배경").click(function() {
+        $(".sky").attr("src", "https://cdn.glitch.me/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/studio_garden_4k_1.png?v=1684764740158");
+        $(".포인트라이트").attr("color", "#ffffe0");
+        $(".포인트라이트").attr("position", "-3.814 9.776 2.689");
+        $(".포인트라이트").attr("intensity", "2");
+        $(".환경라이트").attr("color", "#2d2b1a");
+        console.log('asd')
+    })
+    $(".저녁배경").click(function() {
+        $(".sky").attr("src", "https://cdn.glitch.me/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/vignaioli_night_4k.png?v=1684764743921");
+        $(".포인트라이트").attr("color", "#8f8f5b");
+        $(".포인트라이트").attr("position", "0.462 13.809 6.994");
+        $(".포인트라이트").attr("intensity", "2");
+        $(".환경라이트").attr("color", "#605c3e");
+        console.log('asd')
+    })
+
+    // 옷변경
+    $(".검은티").click(function() {
+        $(".상의").html( '<a-entity gltf-model="#검은티" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    $(".청바지").click(function() {
+        $(".하의").html( '<a-entity gltf-model="#청바지" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    $(".아디다스팬츠").click(function() {
+        $(".하의").html( '<a-entity gltf-model="#아디다스팬츠" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    $(".맨투맨").click(function() {
+        $(".상의").html( '<a-entity gltf-model="#맨투맨" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+
+
+    const array = [
+  {
+    title: "인기",
+    category: [
+      "전체",
+      "데님팬츠",
+      "피케/카라 티셔츠",
+      "캡/야구모자",
+      "반소매 티셔츠",
+      "캔버스/단화",
+      "코튼팬츠",
+      "맨투맨/스웨트셔츠",
+      "셔츠/블라우스",
+      "샌들",
+      "슬리퍼",
+    ],
+  },
+  {
+    title: "상의",
+    category: [
+      "전체",
+      "니트/스웨터",
+      "피케/카라 티셔츠",
+      "후드 티셔츠",
+      "반소매 티셔츠",
+      "긴소매티셔츠",
+      "스포츠 상의",
+      "맨투맨/스웨트셔츠",
+      "셔츠/블라우스",
+      "기타 상의",
+    ],
+  },
+  {
+    title: "바지",
+    category: [
+      "전체",
+      "데님팬츠",
+      "코튼팬츠",
+      "트레이닝/조거팬츠",
+      "슈트팬츠/슬랙스",
+      "스포츠 하의",
+      "기타 바지",
+    ],
+  },
+  {
+    title: "아우터",
+    category: [
+      "전체",
+      "후드집업",
+      "블루종/MA-1",
+      "레더/라이더스 재킷",
+      "무스탕 /퍼",
+      "트러커 재킷",
+      "슈트/블레이저 재킷",
+      "카디건",
+      "플리스",
+      "트레이닝 재킷",
+    ],
+  },
+];
+
+$(function () {
+  for (let i = 0; i < array.length; i++) {
+    const title = array[i].title;
+    const category = array[i].category;
+
+    const navmenu = $('<div class="navmenu"><div>+</div></div>').prepend(
+      $('<a href="#"></a>').text(title)
+    );
+    const ul = $('<ul class="category"></ul>');
+
+    for (let j = 0; j < category.length; j++) {
+      const listItem = $("<li></li>").text(category[j]);
+      ul.append(listItem);
+    }
+
+    const submenu = $('<div class="submenu non-click"></div>').append(ul);
+    const tablist = $('<div class="tablist"></div>')
+      .append(navmenu)
+      .append(submenu);
+    $(".sidebar-container").append(tablist);
+  }
+
+  $(".tablist").click(function (e) {
+    const submenu = $(this).children(".submenu");
+
+    $(submenu).toggleClass("non-click");
+    $(submenu).toggleClass("click");
+  });
+});
+
+
+</script>
+
+  </body>
+</html>
