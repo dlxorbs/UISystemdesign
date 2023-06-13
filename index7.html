@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+      <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <style>
+    
+    * {margin: 0;padding: 0;}
+    li {list-style: none}
+    .buttons {
+      position: absolute;
+      z-index: 99;
+      right: 0px;
+      display: flex;
+    }
+    .button{
+        width: 110px;
+        height: 80px;
+        background-color: #FFFFFF;
+        border: 1px solid #777777;
+        color: #929292;
+        text-align: center;
+        line-height: 80px;
+        font-size: 24px;
+
+    }
+    .button:hover{
+        background-color: #1A294F;
+        color: white;
+    }
+    .cloth{
+      position: absolute;
+      z-index: 99;
+      display: flex;
+      left: 0px;
+      bottom: 0px;
+    }
+    .배경드롭다운{
+      display: none;
+        width: 200px;
+    }
+    .배경드롭다운 li{
+        background-color: #FFFFFF;
+        width: 200px;
+        font-size: 16px;
+        line-height: 46px;
+    }
+    .배경드롭다운 li:hover{
+      background-color: #f0f0f0;
+    }
+    .배경드롭다운 li a{
+      width: 100%;
+      display: inline-block;
+      text-decoration: none;
+      color: black;
+      text-align: start;
+      margin-left: 24px;
+    }
+
+    .menu{
+      box-sizing: border-box;
+      left: -400px;
+      width: 400px;
+      position: absolute;
+      height: 100%;
+      background-color: #ffffff;
+      z-index: 99;
+      padding: 20px;
+      border: 1px solid #1A294F;
+      transition: all 0.3s ease-in-out;
+      
+    }
+
+    .menu>h2{
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .menu>h4{
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .menu>img{
+      position: absolute;
+      right: 0;
+      top: -1px;
+      transform: translateX(100%);
+    }
+    .scroll{
+      height: 100%;
+      overflow-y: scroll;
+    }
+    .scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+
+    .cardLayout{
+      margin-top: 30px;
+      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+   
+    }
+
+
+
+    .cards{
+      box-sizing: border-box;
+      padding: 10px;
+      border: 1px solid #DDDDDD;
+      position: relative;
+    }
+
+    .cards h1{
+      font-size: 14px;
+    }
+    .cards .title{
+      font-size: 14px;
+    }
+
+    .cards .Thum{
+      width: 100%;
+      height: 170px;
+      margin-bottom: 10px;
+    }
+
+    .price{
+      margin-top: 4px;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+    }
+
+    .price p:nth-child(1){
+      text-decoration:line-through;
+      color: #B2B2B2;
+    }
+    .price p:nth-child(2){}
+
+    .lable{
+      position: absolute;
+      background-color: #ffffff;
+      padding: 2px;
+    }
+
+    .couponFlex{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #DDDDDD;
+    }
+
+    .couponFlex div:nth-child(2){
+      color: #4162C9;
+    }
+
+    .coupon{
+      background-color: #4162C9;
+      color: white;
+      font-weight: 800;
+      padding: 4px;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .star{
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .star img{}
+    .star span{
+      color: #FF923A;
+      font-size: 12px;
+    }
+
+    .heart{
+      display: flex;
+      align-items: center;
+      gap:2px;
+    }
+    .heart img{
+
+    }
+    .heart span{
+      font-size: 12px;
+      color: #444444;
+    }
+
+    a-scene{
+      z-index: 0;
+    }
+    
+  </style>
+  <body>
+    <div class="menu">
+      <h2>아바타가 입은 옷</h2>
+      <h4>전체 : 400,000원</h4>
+      <div class="scroll">
+        <div class="cardLayout">
+          <div class="cards">
+            <p1 class="lable">L</p1>
+            <img class="Thum" src="./img/Top1.png" alt="">
+            <h1>엠벨비</h1>
+            <span class="title">
+              루키 언스트럭쳐 볼캡 LA (Blue)
+            </span>
+            <div class="price">
+              <p>36,000원</p>
+              <p>36,000원</p>
+            </div>
+            <div class="couponFlex">
+              <div class="coupon">쿠폰</div>
+              <div>-10,000원</div>
+            </div>
+            <div class="star">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <span>15,327</span>
+            </div>
+            <div class="heart">
+              <img src="./img/heart2.png" alt="">
+              <span>44,154</span>
+            </div>
+          </div>
+          <div class="cards">
+            <p1 class="lable">L</p1>
+            <img class="Thum" src="./img/Top2.png" alt="">
+            <h1>엠벨비</h1>
+            <span class="title">
+              루키 언스트럭쳐 볼캡 LA (Blue)
+            </span>
+            <div class="price">
+              <p>36,000원</p>
+              <p>36,000원</p>
+            </div>
+            <div class="couponFlex">
+              <div class="coupon">쿠폰</div>
+              <div>-10,000원</div>
+            </div>
+            <div class="star">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <span>15,327</span>
+            </div>
+            <div class="heart">
+              <img src="./img/heart2.png" alt="">
+              <span id="num">44,154</span>
+            </div>
+          </div>
+          <div class="cards">
+            <p1 class="lable">L</p1>
+            <img class="Thum" src="./img/Top3.png" alt="">
+            <h1>엠벨비</h1>
+            <span class="title">
+              루키 언스트럭쳐 볼캡 LA (Blue)
+            </span>
+            <div class="price">
+              <p>36,000원</p>
+              <p>36,000원</p>
+            </div>
+            <div class="couponFlex">
+              <div class="coupon">쿠폰</div>
+              <div>-10,000원</div>
+            </div>
+            <div class="star">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <span>15,327</span>
+            </div>
+            <div class="heart">
+              <img src="./img/heart2.png" alt="">
+              <span>44,154</span>
+            </div>
+          </div>
+          <div class="cards">
+            <p1 class="lable">L</p1>
+            <img class="Thum" src="./img/Top4.png" alt="">
+            <h1>엠벨비</h1>
+            <span class="title">
+              루키 언스트럭쳐 볼캡 LA (Blue)
+            </span>
+            <div class="price">
+              <p>36,000원</p>
+              <p>36,000원</p>
+            </div>
+            <div class="couponFlex">
+              <div class="coupon">쿠폰</div>
+              <div>-10,000원</div>
+            </div>
+            <div class="star">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <img src="./img/star.png" alt="">
+              <span>15,327</span>
+            </div>
+            <div class="heart">
+              <img src="./img/heart2.png" alt="">
+              <span>44,154</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img class="menuButton" src="./img/menuB.png" alt="">
+    </div>
+
+    <div class="buttons">
+        <div class="button">배경
+            <ul class="배경드롭다운">
+                <li><a href="#" class="해변가">해변가</a></li>
+                <li><a href="#" class="공원">공원</a></li>
+                <li><a href="#" class="바깥">바깥</a></li>
+                <li><a href="#" class="도시">도시</a></li>
+              </ul>
+            </ul>
+        </div>
+        <div class="button">포즈</div>
+    </div>
+    <div class="cloth">
+        <!-- <div class="button 검은티">검은티</div>
+        <div class="button 청바지">청바지</div>
+        <div class="button 아디다스팬츠">아디다스팬츠</div>
+        <div class="button 맨투맨">맨투맨</div>
+        <div class="button 붉은티">붉은티</div>f
+        <div class="button 흰티">흰티</div>
+        <div class="button 검은바지">검은바지</div>
+        <div class="button 검은반팔">검은반팔</div>
+        <div class="button 흰반팔">흰반팔</div> -->
+    </div>
+    <a-ssets>
+      <a-asset-item id="검은티"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EA%B2%80%EC%9D%80%ED%8B%B0.glb?v=1684759828708">
+      </a-asset-item>
+      <a-asset-item id="청바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%B2%AD%EB%B0%94%EC%A7%80.glb?v=1684760684296">
+      </a-asset-item>
+      <a-asset-item id="아디다스팬츠"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%8C%AC%EC%B8%A0.glb?v=1684770819587">
+      </a-asset-item>
+      <a-asset-item id="맨투맨"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EB%A7%A8%ED%88%AC%EB%A7%A8.glb?v=1684770945625">
+      </a-asset-item>
+      <a-asset-item id="붉은티"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EB%B9%A8%EA%B0%84%ED%9B%84%EB%93%9C2.glb?v=1685282146977">
+      </a-asset-item>
+      <a-asset-item id="흰티"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%8A%AC%EB%9E%99%EC%8A%A4%ED%9D%B0%ED%8B%B0.glb?v=1685338729528">
+      </a-asset-item>
+      <a-asset-item id="검은바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%8A%AC%EB%9E%99%EC%8A%A4%EA%B2%80%EC%9D%80%EB%B0%94%EC%A7%80.glb?v=1685338723828">
+      </a-asset-item>
+      <a-asset-item id="검은반팔"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EA%B2%80%EC%9D%80%EB%B0%98%ED%8C%94.glb?v=1685351844498">
+      </a-asset-item>
+      <a-asset-item id="흰반팔"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%9D%B0%ED%8B%B0.glb?v=1685351658293">
+      </a-asset-item>
+      <a-asset-item id="EBFD"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/EBFD.glb?v=1686369121795">
+      </a-asset-item>
+      <a-asset-item id="신발"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/sheo.glb?v=1686369388261">
+      </a-asset-item>
+      <a-asset-item id="흰긴바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%9D%B0%EA%B8%B4%EB%B0%94%EC%A7%80.glb?v=1686372011221">
+      </a-asset-item>
+      <a-asset-item id="흰반바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%9D%B0%EB%B0%98%EB%B0%94%EC%A7%80.glb?v=1686372047307">
+      </a-asset-item>
+      <a-asset-item id="패딩"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%8C%A8%EB%94%A9.glb?v=1686375705601">
+      </a-asset-item>
+      <a-asset-item id="목폴라"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EB%AA%A9%ED%8F%B4%EB%9D%BC.glb?v=1686375306198">
+      </a-asset-item>
+      <a-asset-item id="카고긴바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%B9%B4%EA%B3%A0%EA%B8%B4%EB%B0%94%EC%A7%80.glb?v=1686375375939">
+      </a-asset-item>
+      <a-asset-item id="카고반바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%B9%B4%EA%B3%A0%EB%B0%98%EB%B0%94%EC%A7%80.glb?v=1686375424301">
+      </a-asset-item>
+      <a-asset-item id="파란바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%8C%8C%EB%9E%80%EB%B0%94%EC%A7%80.glb?v=1686378622781">
+      </a-asset-item>
+      <a-asset-item id="녹색로고"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EB%85%B9%EC%83%89%EB%A1%9C%EA%B3%A0.glb?v=1686378269818">
+      </a-asset-item>
+      <a-asset-item id="시현바지"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%EC%8B%9C%ED%98%84%EB%B0%94%EC%A7%80.glb?v=1686385083879">
+      </a-asset-item>
+      <a-asset-item id="흰셔츠"
+                      src="https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/%ED%9D%B0%EC%83%A4%EC%B8%A0.glb?v=1686385775758">
+      </a-asset-item>
+      <!-- <a-asset-item id="벽돌바닥"
+                      src="./img/model/ROAD.glb">
+      </a-asset-item> -->
+      <a-asset-item id="해변가"
+                      src="https://cdn.glitch.me/ddbe6d13-fe5b-4821-a20e-69ece2abc131/beach.glb?v=1686414306002">
+      </a-asset-item>
+      <a-asset-item id="공원"
+                      src="https://cdn.glitch.me/ddbe6d13-fe5b-4821-a20e-69ece2abc131/park.glb?v=1686588366121">
+      </a-asset-item>
+      <a-asset-item id="바깥"
+                      src="https://cdn.glitch.me/ddbe6d13-fe5b-4821-a20e-69ece2abc131/outside.glb?v=1686497933066">
+      </a-asset-item>
+      <a-asset-item id="도시"
+                      src="https://cdn.glitch.global/ddbe6d13-fe5b-4821-a20e-69ece2abc131/road.gltf?v=1686391104956">
+      </a-asset-item>
+
+    </a-ssets>
+  <a-scene shadow="autoUpdate: true; type: pcfsoft" renderer="gammaOutput: true">
+    <a-entity camera look-controls orbit-controls="target: 0 1.6 -0.5; minDistance: 0.5; maxDistance: 180; initialPosition: 0 5 15"></a-entity>
+    <a-entity class="상의">
+        <a-entity gltf-model="#검은티" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>
+    </a-entity>
+    <a-entity class="하의">
+        <a-entity gltf-model="#청바지" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>
+    </a-entity>
+    <a-entity gltf-model="#신발" normal-map="#normal" scale="1.6 1.6 1.6" position = "0 -10.5 -0.4" shadow="cast:true; receive:true;" flat-shading="true"> 
+    </a-entity>
+      <!--바닥면 -->
+    <a-entity class="바닥">
+      <a-entity id="해변가" gltf-model="#해변가" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true" visible="true"></a-entity>
+      <a-entity id="공원" gltf-model="#공원" rotation = '0 180 0' normal-map="#normal" scale="60 60 60" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true" visible="false"></a-entity>
+      <a-entity id="바깥" gltf-model="#바깥" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true" visible="false"></a-entity>
+      <a-entity id="도시" gltf-model="#도시" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true" visible="false"></a-entity>
+    </a-entity>
+      <!-- 환경 -->
+      <a-sky class="sky" rotation="0 64 0" src="./img/sky.png"></a-sky>
+      <a-light class="포인트라이트" type="point" color="#ffffff" position="-2.037 17.339 2.621" intensity = "2"></a-light>
+      <a-light class="환경라이트" type="ambient" color="#c2c2c2"></a-light>
+  </a-scene>
+
+<script>
+    $(".button").hover(function() {
+        $(this).children("ul").stop().slideToggle(500)
+    })
+
+    // 배경변경
+    $(".해변가").click(function() {
+        $(".sky").attr("src", "./img/sky.png");
+        // $(".sky").attr("src", "https://cdn.glitch.global/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/brown_photostudio_02_4k-_1_.png?v=1684764403602");
+        $("#해변가")[1].object3D.visible = true;
+        $("#공원")[1].object3D.visible = false;
+        $("#바깥")[1].object3D.visible = false;
+        $("#도시")[1].object3D.visible = false;
+        // $(".바닥").html( '<a-entity id="floor" gltf-model="#해변가" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+        $(".포인트라이트").attr("color", "#ffffff");
+        $(".포인트라이트").attr("position", "-2.037 17.339 2.621");
+        $(".포인트라이트").attr("intensity", "2");
+        $(".환경라이트").attr("color", "#c2c2c2");
+        console.log('실내배경 전환')
+
+    })
+    $(".공원").click(function() {
+      $("#해변가")[1].object3D.visible = false;
+        $("#공원")[1].object3D.visible = true;
+        $("#바깥")[1].object3D.visible = false;
+        $("#도시")[1].object3D.visible = false;
+        $(".sky").attr("src", "./img/sky2.png");
+        // $(".바닥").html( '<a-entity id="floor" gltf-model="#공원" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+        $(".포인트라이트").attr("color", "#ffffff");
+        $(".포인트라이트").attr("position", "-0 17.339 0");
+        $(".포인트라이트").attr("intensity", "2.4");
+        $(".환경라이트").attr("color", "#c2c2c2");
+        console.log('asd')
+    })
+    $(".바깥").click(function() {
+      $("#해변가")[1].object3D.visible = false;
+        $("#공원")[1].object3D.visible = false;
+        $("#바깥")[1].object3D.visible = true;
+        $("#도시")[1].object3D.visible = false;
+        $(".sky").attr("src", "./img/sky.png");
+        // $(".바닥").html( '<a-entity id="floor" gltf-model="#바깥" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+        $(".포인트라이트").attr("color", "#ffffe0");
+        $(".포인트라이트").attr("position", "-3.814 9.776 2.689");
+        $(".포인트라이트").attr("intensity", "2");
+        $(".환경라이트").attr("color", "#2d2b1a");
+        console.log('asd')
+    })
+    $(".도시").click(function() {
+      $("#해변가")[1].object3D.visible = false;
+        $("#공원")[1].object3D.visible = false;
+        $("#바깥")[1].object3D.visible = false;
+        $("#도시")[1].object3D.visible = true;
+        $(".sky").attr("src", "https://cdn.glitch.me/3bc7df8a-b9ed-4f0e-a3f6-50f6621546e3/vignaioli_night_4k.png?v=1684764743921");
+        // $(".바닥").html( '<a-entity id="floor" gltf-model="#도시" normal-map="#normal" scale="20 20 20" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+        $(".포인트라이트").attr("color", "#8f8f5b");
+        $(".포인트라이트").attr("position", "0.462 13.809 6.994");
+        $(".포인트라이트").attr("intensity", "2");
+        $(".환경라이트").attr("color", "#605c3e");
+        console.log('asd')
+    })
+
+    // 옷변경
+
+
+    //상의
+
+    $(".cards" , parent.document).eq(0).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#검은티" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(1).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#검은반팔" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' ); 
+    })
+
+    $(".cards" , parent.document).eq(2).click(function() {
+      console.log('asdad')
+        $(".상의").html( '<a-entity gltf-model="#맨투맨" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(3).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#붉은티" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(4).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#흰반팔" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 0.2" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(5).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#EBFD" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(6).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#패딩" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+
+    $(".cards" , parent.document).eq(7).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#목폴라" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    $(".cards" , parent.document).eq(8).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#녹색로고" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -12 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(9).click(function() {
+        $(".상의").html( '<a-entity gltf-model="#흰셔츠" normal-map="#normal" scale="2 2 2" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(10).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#아디다스팬츠" normal-map="#normal" scale="1.8 1.8 1.8" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+ 
+    // $(".흰티").click(function() {
+    //     $(".상의").html( '<a-entity gltf-model="#흰티" normal-map="#normal" scale="2.2 2.2 2.2" position = "0 -12 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    // })
+    
+    $(".cards" , parent.document).eq(11).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#검은바지" normal-map="#normal" scale="2.0 2.0 2.0" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    
+    $(".cards" , parent.document).eq(12).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#흰긴바지" normal-map="#normal" scale="2.0 2.0 2.0" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(13).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#흰반바지" normal-map="#normal" scale="2.0 2.0 2.0" position = "0 -10 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(14).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#카고긴바지" normal-map="#normal" scale="1.8 1.8 1.8" position = "0 -9.8 0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    $(".cards" , parent.document).eq(15).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#카고반바지" normal-map="#normal" scale="2.0 2.0 2.0" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    $(".cards" , parent.document).eq(16).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#파란바지" normal-map="#normal" scale="2.0 2.0 2.0" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+    $(".cards" , parent.document).eq(17).click(function() {
+        $(".하의").html( '<a-entity gltf-model="#시현바지" normal-map="#normal" scale="2.0 2.0 2.0" position = "0 -11 -0" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>' );
+    })
+
+    
+    
+    console.log($('.배경드롭다운 li a'))
+    let toggle = false;
+    $('.menuButton').click(function(){
+      if(toggle){
+        $('.menu').css("left","-400px")
+        toggle = false;
+    }else{
+      $('.menu').css("left","0px")
+      toggle = true;
+    }
+ 
+    })
+
+    $('.배경드롭다운 li a').click(function(){
+    })
+
+</script>
+<script src="./index2.js"></script>
+  </body>
+</html>

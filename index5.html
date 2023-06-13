@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+      <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <style>
+
+  </style>
+  <body>
+    <a-ssets>
+      <a-asset-item id="보통"
+                      src="./glb/정상.glb">
+      </a-asset-item>
+      <a-asset-item id="마름"
+                      src="./glb/마름.glb">
+      </a-asset-item>
+      <a-asset-item id="건장"
+                      src="./glb/근육.glb">
+      </a-asset-item>
+      <a-asset-item id="뚱뚱"
+                      src="./glb/비만.glb">
+      </a-asset-item>
+    </a-ssets>
+  <a-scene shadow="autoUpdate: true; type: pcfsoft" renderer="gammaOutput: true">
+    <a-entity camera look-controls orbit-controls="target: 0 1.6 -0.5; minDistance: 0.5; maxDistance: 180; initialPosition: 0 5 15"></a-entity>
+    <a-entity class="체형">
+        <a-entity gltf-model="#보통" normal-map="#normal" scale="10 10 10" position = "0 -8 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>
+    </a-entity>
+
+      <a-sky class="sky" rotation="0 64 0" color="#31393d"></a-sky>
+      <a-light class="포인트라이트" type="point" color="#9dc2be" position="-12.498 17.339 7.324" intensity = "1.4"></a-light>
+      <a-light class="환경라이트" type="ambient" color="#7c8094"></a-light>
+  </a-scene>
+
+<script>
+    $(".button").hover(function() {
+        $(this).children("ul").stop().slideToggle(500)
+    })
+
+    $(".box" , parent.document).eq(0).click(function() {
+      let val = '보통'
+      $('.체형').html(`<a-entity gltf-model="#${val}" normal-map="#normal" scale="10 10 10" position = "0 -8 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>`)
+    })
+    $(".box" , parent.document).eq(1).click(function() {
+      let val = '건장'
+      $('.체형').html(`<a-entity gltf-model="#${val}" normal-map="#normal" scale="10 10 10" position = "0 -8 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>`)
+    })
+    $(".box" , parent.document).eq(2).click(function() {
+      let val = '뚱뚱'
+      $('.체형').html(`<a-entity gltf-model="#${val}" normal-map="#normal" scale="10 10 10" position = "0 -8 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>`)
+    })
+    $(".box" , parent.document).eq(3).click(function() {
+      let val = '마름'
+      $('.체형').html(`<a-entity gltf-model="#${val}" normal-map="#normal" scale="10 10 10" position = "0 -8 0.4" shadow="cast:true; receive:true;" flat-shading="true"></a-entity>`)
+    })
+
+</script>
+
+  </body>
+</html>

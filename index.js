@@ -88,3 +88,66 @@ $(function () {
     $(submenu).toggleClass("click");
   });
 });
+
+const text_box =
+  '<div class="card-Avatar"><div class="thumbnail"></div><div class="textcontainer"><span class="username">username</span><p class="codyname">코디이름</p><div class="sub"><div class="new"><strong>N</strong></div><p>DIVISION</p><div class="view">조회</div></div></div></div></div>';
+
+for (i = 0; i < 20; i++) {
+  $(".card-container").append(text_box);
+  //  $($('.card-Avatar')[i].children[0].css("width", "100px"))
+  $(".thumbnail")
+    .eq(i)
+    .css("background-image", `url(./img/cha${i + 1}.png)`);
+}
+
+const text_box2 =
+  '<div class="cards"><p1 class="lable">L</p1><img class="Thum" src="./img/Top1.png" style="-webkit-user-drag: none;" alt=""><h1>엠벨비</h1><span class="title">루키 언스트럭쳐 볼캡 LA (Blue)</span><div class="price"><p>36,000원</p><p>36,000원</p></div><div class="couponFlex"><div class="coupon">쿠폰</div><div>-10,000원</div></div><div class="star"><img src="./img/star.png" alt=""><img src="./img/star.png" alt=""><img src="./img/star.png" alt=""><img src="./img/star.png" alt=""><img src="./img/star.png" alt=""><span>15,327</span></div><div class="heart"><img src="./img/heart2.png" alt=""><span>44,154</span></div></div></div>';
+
+for (i = 0; i < 10; i++) {
+  $(".cardLayout").eq(0).append(text_box2);
+  $(".Thum")
+    .eq(i)
+    .attr("src", `./img/cloth/cloth${i + 1}.png`);
+}
+
+for (i = 10; i < 18; i++) {
+  $(".cardLayout").eq(1).append(text_box2);
+
+  $(".Thum")
+    .eq(i)
+    .attr("src", `./img/cloth/cloth${i + 1}.png`);
+}
+
+// 스크롤
+// 스크롤
+let curDown = false;
+let curXPos = 0;
+let scrollOffset = 0;
+const dragThreshold = 10; // 일정 거리 이상의 드래그를 인식하기 위한 임계값 설정
+let dragThreshold1;
+let dragThreshold2;
+
+$(".cardLayoutWrap").mousemove(function (m) {
+  if (curDown) {
+    const dragOffset = m.clientX - curXPos;
+    scrollOffset += dragOffset;
+    $(".cardLayoutscroll").css({ transform: `translateX(${scrollOffset}px)` });
+    curXPos = m.clientX;
+  }
+});
+
+$(".cardLayoutWrap").mousedown(function (m) {
+  curXPos = m.clientX;
+  dragThreshold1 = curXPos;
+  curDown = true;
+});
+
+$(".cardLayoutWrap").mouseup(function (m) {
+  dragThreshold2 = curXPos;
+  if (Math.abs(dragThreshold1 - dragThreshold2) > dragThreshold) {
+    // 일정 거리 이상의 드래그인 경우 클릭 방지
+    m.preventDefault();
+  }
+  curDown = false;
+  console.log(Math.abs(dragThreshold1 - dragThreshold2));
+});
